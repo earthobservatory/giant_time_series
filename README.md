@@ -69,7 +69,7 @@ outputs of GIAnT's `SBASInvertWrapper.py` and `NSBASInvertWrapper.py`, respectiv
 1. Click `Process Now`.
 
 ### Visualization
-#### Panoply
+#### Option 1: Panoply
 1. Open HDF5 in `Panoply`: File->Open.
 1. Double click on `rawts` (raw time series) or `recons` (reconstructed time series) variable.
 1. Select `Create a georeferenced Longitude-Latitude plot`. Click on `Create`.
@@ -77,3 +77,17 @@ outputs of GIAnT's `SBASInvertWrapper.py` and `NSBASInvertWrapper.py`, respectiv
 1. Click on the `Scale` tab and set `Scale Range Min.` to `-100` and `Max.` to `100`. You can play around with the values.
 1. Click on the `Arrays` tab and cycle through the time slices by clicking the `up` arrow button.
 ![panoply](https://user-images.githubusercontent.com/387300/46819763-666c3e80-cd39-11e8-8b0b-74325014b4a3.gif)
+
+#### Option 2: Leaflet server
+If a leaflet time-series server is made available to you, you may visualize your time-series dataset by ingesting it into the server.
+1. In the `tosca` interface, facet on the specific `time-series` dataset you would like to visualize on the map.
+1. Click `On-Demand`.
+1. For `Action`, select `Displacement Time Series Ingest`
+1. For `Queue`, select `ts-ingest`
+1. In the parameters section below, select:
+    1. `thredds_data_dir` - the leaflet-servers thredds directory location to ingest time-series data
+    1. `leaflet_url` - the url which the leaflet server is hosted
+1. Click `Process Now`.
+1. After job submission, a `Visualize` button will appear in `tosca` for your time-series dataset: <img src="https://user-images.githubusercontent.com/6346909/51800817-1d041880-2270-11e9-9a22-691927bad7df.png" width="350" class="centre">
+1. Clicking on it will bering you to the ingested time-series in leaflet:
+![leaflet-server](https://user-images.githubusercontent.com/6346909/51800988-ed0a4480-2272-11e9-8255-5afcaf3e2d86.gif)
