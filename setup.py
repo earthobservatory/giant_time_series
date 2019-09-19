@@ -11,7 +11,7 @@ setup(
     zip_safe=False,
     install_requires=[
         "h5py", "numpy", "scipy", "gdal",
-        "pytest", "scripttest", "mock", "flake8", "pylint",
+        "pytest", "scripttest", "mock", "flake8", "pylint==2.2.2",
         "pytest-cov", "pandas"
     ]
 )
