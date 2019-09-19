@@ -13,7 +13,7 @@ GIAnT time series processing of ISCEv2 interferograms
    ```
    sds pkg import container-hysds_giant_time_series.<version>.sdspkg.tar
    ```
-1. Add datasets config for `filtered-ifg-stack` and `displacement-time-series` to your *datasets.json* templates 
+1. Add datasets config for `filtered-ifg-stack`, `filtered-gunw-merged-stack`, and `displacement-time-series` to your *datasets.json* templates 
 under *~/.sds/files* on `mozart`. Example config entries can be found [here](conf/datasets.json).
 1. On `mozart`, recreate the code/config bundles and ship:
    ```
@@ -22,7 +22,7 @@ under *~/.sds/files* on `mozart`. Example config entries can be found [here](con
 
 ## Filtered Interferogram Stack
 ### Description
-The filtered interferogram (`IFG`) stack dataset (`filtered-ifg-stack`) is primarily the HDF5 `RAW-STACK.h5` and 
+The filtered interferogram (`IFG`) stack datasets (`filtered-ifg-stack`) and (`filtered-gunw-merged-stack`) are primarily the HDF5 `RAW-STACK.h5` and 
 `PROC-STACK.h5` outputs of GIAnT's `PrepIgramStack.py` and `ProcessStack.py`, respectively. Prior to
 running these PGEs, a first-order filtering step is performed to filter out IFGs whose track and subswaths
 don't match those specified. Additionally, IFGs are filtered whose reference bounding box contains no data
@@ -46,6 +46,19 @@ that pass the coherence threshold or which do not cover the region of interest.
 1. Click on `On-Demand`.
 1. For `Action`, select `GIAnT - Create filtered single scene IFG stack [\<version\>].
 1. In the parameters section below, ensure `track` and `subswath` matches the track and subswath you initially faceted on. This ensures that `S1-IFG` products for other tracks and subswaths are filtered out in case the user failed to facet down to them.
+1. Populate `ref_point`.
+1. Adjust other parameters accordingly.
+1. Click `Process Now`.
+
+## Filtered GUNW Merged Stack
+### Usage
+1. In `tosca` interface, draw bounding box on the region of interest.
+1. Facet on the `S1-GUNW-MERGED` dataset.
+1. Facet on the `dataset version` (v2.0.2).
+1. Facet on the `track number`.
+1. Click on `On-Demand`.
+1. For `Action`, select `GIAnT - Create filtered GUNW-MERGED stack [\<version\>].
+1. In the parameters section below, ensure `track` matches the track you initially faceted on. This ensures that `S1-GUNW-MERGED` products for other tracksare filtered out in case the user failed to facet down to them.
 1. Populate `ref_point`.
 1. Adjust other parameters accordingly.
 1. Click `Process Now`.

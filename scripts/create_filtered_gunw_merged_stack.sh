@@ -1,8 +1,6 @@
 #!/bin/bash
 BASE_PATH=$(dirname "${BASH_SOURCE}")
-echo $BASE_PATH
 BASE_PATH=$(cd "${BASE_PATH}"; pwd)
-echo $BASE_PATH
 
 # set PGE path
 PGE_PATH=$(cd "${BASE_PATH}/.."; pwd)
@@ -12,11 +10,11 @@ BIN_PATH=$PGE_PATH/scripts
 INPUT_DIR=orig_symlinked_inputs
 if [ ! -d "$INPUT_DIR" ]; then
    mkdir $INPUT_DIR
-   mv filtered-gunw-merged-stack* $INPUT_DIR/
+   mv S1-GUNW-MERGED* $INPUT_DIR/
    cd $INPUT_DIR
-   cp -aL filtered-gunw-merged-stack* ..
+   cp -aL S1-GUNW-MERGED* ..
    cd ..
-fi 
+fi
 
 # source ISCE env
 export GMT_HOME=/usr/local/gmt
@@ -30,15 +28,19 @@ export PATH=$BIN_PATH:$GMT_HOME/bin:$PATH
 source $PGE_PATH/env/bin/activate
 
 echo "##########################################" 1>&2
-echo -n "Running displacement time series generation: " 1>&2
+echo -n "Running filtered interferogram stack generation: " 1>&2
 date 1>&2
-python $BIN_PATH/create_displacement_time_series.py _context.json > create_displacement_time_series.log 2>&1
+python $BIN_PATH/create_filtered_gunw_merged_stack.py _context.json > create_filtered_gunw_merged_stack.log 2>&1
 STATUS=$?
-echo -n "Finished running displacement time series generation: " 1>&2
+echo -n "Finished running filtered interferogram stack generation: " 1>&2
 date 1>&2
 if [ $STATUS -ne 0 ]; then
-  echo "Failed to run displacement time series generation." 1>&2
-  cat create_displacement_time_series.log 1>&2
+  echo "Failed to run filtered interferogram stack generation." 1>&2
+  cat create_filtered_gunw_merged_stack.log 1>&2
   echo "{}"
   exit $STATUS
 fi
+
+# copy log to dataset
+cp create_filtered_gunw_merged_stack.log filtered-gunw-merged-stack*/
+
